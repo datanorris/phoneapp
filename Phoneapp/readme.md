@@ -41,7 +41,7 @@ Response|200 OK, or informative validation error message
 ## API layer - Customer search by phone prefix
 |Property|Spec|
 |---|---|
-Url|GET /customer/search-by-phone-prefix
+Url|GET /customer/customer-search-by-phone-prefix
 Query string|phonePrefix="&lt;prefix string>", (optional) maxResults=&lt;integer>
 Action|validate input, treat maxResults as 10 if it is missing, &lt;=0 or >10, invoke data API, return results
 Response|list of {"customerId": &lt;int>, "customerName": &lt;string>, "customerPhoneNumber": &lt;string>}
