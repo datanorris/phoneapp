@@ -15,32 +15,36 @@ The data API, in accordance with the above, pushes all the work to the database,
 The data layer search function is restricted to 100 results, and the API layer search is restricted to 10.
 
 ## Data layer - Create customer
----|---
-Url|POST /customer/create
-Posted data|{"customerName": "<string 1-200 chars>", "customerPhoneNumber": "<11 digits>"}
-Action|validate input, insert customer record in SQL database
-Response|200 OK
+|Property|Spec|
+|---|---|
+|Url|POST /customer/create|
+|Posted data|{"customerName": "&lt;string 1-200 chars>", "customerPhoneNumber": "&lt;11 digits>"}|
+|Action|validate input, insert customer record in SQL database|
+|Response|200 OK|
 
 ## Data layer - Customer search by phone prefix 
----|---
+|Property|Spec|
+|---|---|
 Url|GET /customer/search-by-phone-prefix
-Query string|phonePrefix=<prefix string>, (optional) maxResults=<integer>
-Action|validate input, treat maxResults as 100 if it is missing, <=0 or >100, perform search, return top results ordered by phone number (via SQL query)
-Response|list of {"customerId": <int>, "customerName": <string>, "customerPhoneNumber": <string>}
+Query string|phonePrefix="&lt;prefix string>", (optional) maxResults=&lt;integer>
+Action|validate input, treat maxResults as 100 if it is missing, &lt;=0 or >100, perform search, return top results ordered by phone number (via SQL query)
+Response|list of {"customerId": &lt;int>, "customerName": &lt;string>, "customerPhoneNumber": &lt;string>}
 
 ## API layer - Create customer
----|---
+|Property|Spec|
+|---|---|
 Url|POST /phoneAPI/create-customer
-Posted data|{"customerName": "<string 1-200 chars>", "customerPhoneNumber": "<11 digits>"}
+Posted data|{"customerName": "&lt;string 1-200 chars>", "customerPhoneNumber": "&lt;11 digits>"}
 Action|invoke data API to create customer
 Response|200 OK, or informative validation error message
 
 ## API layer - Customer search by phone prefix
----|---
+|Property|Spec|
+|---|---|
 Url|GET /customer/search-by-phone-prefix
-Query string|phonePrefix=<prefix string>, (optional) maxResults=<integer>
-Action|validate input, treat maxResults as 10 if it is missing, <=0 or >10, invoke data API, return results
-Response|list of {"customerId": <int>, "customerName": <string>, "customerPhoneNumber": <string>}
+Query string|phonePrefix="&lt;prefix string>", (optional) maxResults=&lt;integer>
+Action|validate input, treat maxResults as 10 if it is missing, &lt;=0 or >10, invoke data API, return results
+Response|list of {"customerId": &lt;int>, "customerName": &lt;string>, "customerPhoneNumber": &lt;string>}
 
 # How to run
 Apologies, haven't had time to dockerize this.
@@ -50,5 +54,5 @@ Apologies, haven't had time to dockerize this.
  - `flask init-db` to initialize the database
  - `flask run` to run the web service (it'll run on port 5000)
 
-I have also provided a test suite that can be run with `flask smash-db` - this will populate the databse with >20 million records, then run a query on it and measure how long it takes. On my machine it's 4 seconds.
+I have also provided a test that can be run with `flask smash-db` - this will populate the databse with >20 million records, then run a query on it and measure how long it takes. On my machine it's 4 seconds, which is largely the web service overhead.
 
